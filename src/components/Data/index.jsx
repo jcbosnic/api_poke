@@ -5,29 +5,33 @@ import { Block, SerchBlock, ListBlock, Search, Pod, Image, Name, Loading } from 
 let offset = 0;
 
 const SearchComponent = () => {
+
   const [ data, setData ] = useState([]);
   const [ search, setSearch ] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-
-  console.log('1', isLoading)
-  const getData = async() => {
-      setIsLoading(true)
-       await axios
-       .get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`)
-       //Pasamos el nombre del array (results)
-       .then(({ data }) => {
-         console.log('2', isLoading)
-         const newData =[];
-         data.results.forEach( (d) => newData.push(d.name));
-         console.log(data.results);  
-         setData((oldData) => [...oldData, ...newData]);
+  
+  
+  const getData = () => {
+    setIsLoading(true)
+    console.log('first', isLoading)
+    axios
+    .get(`https://pokeapi.co/api/v2/pokemon?limit=10&offset=${offset}`)
+    //Pasamos el nombre del array (results)
+    .then(({ data }) => {
+      setTimeout( () => {
+        const newData =[];
+        data.results.forEach( (d) => newData.push(d.name));
+          console.log(data.results);  
+          setData((oldData) => [...oldData, ...newData]);
+          setIsLoading(false)
+          console.log('second', isLoading)
+        }, 500);
         })
-        setIsLoading(false)
+        
         offset += 10;
     }
 
-    
     //ejecutamos  setSearch y rescatmos los cambios del input
     const handleSearchChange = (e) => {
       setSearch(e.target.value);
@@ -42,10 +46,14 @@ const SearchComponent = () => {
             getData()
          }
     }
+
+    const eventListener = () => {
+      window.addEventListener('scroll', handleScroll)
+    }
     
     useEffect( () => { 
         getData();
-        window.addEventListener('scroll', handleScroll)
+        eventListener()
     },[])
 
 
