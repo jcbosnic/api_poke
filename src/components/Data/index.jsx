@@ -1,6 +1,14 @@
 import React, {useState, useEffect} from "react";
 import axios from "axios";
-import { Block, SerchBlock, ListBlock, Search, Pod, Image, Name, Loading } from './styles'
+import { Block, 
+         SerchBlock, 
+         ListBlock, 
+         Search, 
+         Pod, 
+         Image, 
+         Name, 
+         Loading 
+      } from './styles'
 
 let offset = 0;
 
@@ -10,8 +18,6 @@ const SearchComponent = () => {
   const [ search, setSearch ] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  
-  
   const getData = () => {
     setIsLoading(true)
     console.log('first', isLoading)
